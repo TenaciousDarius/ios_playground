@@ -1008,10 +1008,17 @@ var arrayOfReports = inputs.components(separatedBy: "\n")
 var separatedArrayOfIntegers: [[Int]] = []
 
 for array in arrayOfReports {
-    // separate each array into an array of strings
     let arrayOfStrings = array.split(separator: " ")
-    // make each string into an integer
     let arrayOfIntegers = arrayOfStrings.map { Int($0)! } // could do this without force unwrapping for safety??
-    // add array to separatedArrayOfIntegers
     separatedArrayOfIntegers.append(arrayOfIntegers)
 }
+
+var numberOfSafeReports = 0
+
+func checkIfAscendingOrDescending(array: [Int]) -> Bool {
+    if array == array.sorted() || array == array.sorted(by: >) {
+        return true
+    }
+    return false
+}
+
