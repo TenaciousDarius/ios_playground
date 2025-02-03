@@ -1017,19 +1017,11 @@ for array in arrayOfReports {
 
 //MARK: - Part 1
 
-func checkIfAscending(_ array: [Int]) -> Bool {
-    array == array.sorted()
-}
-
-func checkIfDescending(_ array: [Int]) -> Bool {
-    array == array.sorted(by: >)
-}
-
 func checkIfAscendingArrayIsSafe(_ array: [Int]) -> Bool {
     var isSafe: Bool = true
     var index = 0
     
-    if checkIfAscending(array) {
+    if array == array.sorted() {
         while index < array.count - 1 {
             if array[index] >= array[index + 1] || array[index] + 4 <= array[index + 1] {
                 isSafe = false
@@ -1048,7 +1040,7 @@ func checkIfDescendingArrayIsSafe(_ array: [Int]) -> Bool {
     var isSafe: Bool = true
     var index = 0
     
-    if checkIfDescending(array) {
+    if array == array.sorted(by: >) {
         while index < array.count - 1 {
             if array[index] == array[index + 1] || array[index] >= array[index + 1] + 4 {
                 isSafe = false
@@ -1062,13 +1054,6 @@ func checkIfDescendingArrayIsSafe(_ array: [Int]) -> Bool {
         
     return isSafe
 }
-
-let ascendingNotSafe = [1, 2, 7, 8, 9]
-let ascendingSafe = [1, 2, 3, 4, 5]
-let descendingNotSafe = [9, 7, 6, 2, 1]
-let descendingSafe = [9, 8, 7, 6, 5]
-let descendingNotSafeDoubles = [8, 6, 4, 4, 1]
-let notSafe = [1, 3, 2, 4, 5]
 
 var totalSafeReports: Int = 0
 
@@ -1111,3 +1096,12 @@ for array in separatedArrayOfIntegers {
 }
 
 print(totalSafeReportsPart2)
+
+//MARK: - Test arrays
+
+let ascendingNotSafe = [1, 2, 7, 8, 9]
+let ascendingSafe = [1, 2, 3, 4, 5]
+let descendingNotSafe = [9, 7, 6, 2, 1]
+let descendingSafe = [9, 8, 7, 6, 5]
+let descendingNotSafeDoubles = [8, 6, 4, 4, 1]
+let notSafe = [1, 3, 2, 4, 5]
