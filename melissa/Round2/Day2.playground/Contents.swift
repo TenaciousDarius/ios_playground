@@ -1,5 +1,7 @@
 import Cocoa
 
+//MARK: - Arranging array
+
 let inputs = """
 75 76 77 80 82 85 84
 49 52 53 55 58 59 61 61
@@ -1013,12 +1015,99 @@ for array in arrayOfReports {
     separatedArrayOfIntegers.append(arrayOfIntegers)
 }
 
-var numberOfSafeReports = 0
+//MARK: - Part 1
 
-func checkIfAscendingOrDescending(array: [Int]) -> Bool {
-    if array == array.sorted() || array == array.sorted(by: >) {
-        return true
-    }
-    return false
+func checkIfAscending(_ array: [Int]) -> Bool {
+    array == array.sorted()
 }
 
+func checkIfDescending(_ array: [Int]) -> Bool {
+    array == array.sorted(by: >)
+}
+
+func checkIfAscendingArrayIsSafe(_ array: [Int]) -> Bool {
+    var isSafe: Bool = true
+    var index = 0
+    
+    if checkIfAscending(array) {
+        while index < array.count - 1 {
+            if array[index] >= array[index + 1] || array[index] + 4 <= array[index + 1] {
+                isSafe = false
+                break
+            }
+            index += 1
+        }
+    } else {
+        isSafe = false
+    }
+    
+    return isSafe
+}
+
+func checkIfDescendingArrayIsSafe(_ array: [Int]) -> Bool {
+    var isSafe: Bool = true
+    var index = 0
+    
+    if checkIfDescending(array) {
+        while index < array.count - 1 {
+            if array[index] == array[index + 1] || array[index] >= array[index + 1] + 4 {
+                isSafe = false
+                break
+            }
+            index += 1
+        }
+    } else {
+        isSafe = false
+    }
+        
+    return isSafe
+}
+
+let ascendingNotSafe = [1, 2, 7, 8, 9]
+let ascendingSafe = [1, 2, 3, 4, 5]
+let descendingNotSafe = [9, 7, 6, 2, 1]
+let descendingSafe = [9, 8, 7, 6, 5]
+let descendingNotSafeDoubles = [8, 6, 4, 4, 1]
+let notSafe = [1, 3, 2, 4, 5]
+
+var totalSafeReports: Int = 0
+
+for array in separatedArrayOfIntegers {
+    if checkIfAscendingArrayIsSafe(array) {
+        totalSafeReports += 1
+    } else if checkIfDescendingArrayIsSafe(array) {
+        totalSafeReports += 1
+    }
+}
+
+print(totalSafeReports)
+
+//MARK: - Part 2
+
+var totalSafeReportsPart2: Int = 0
+
+for array in separatedArrayOfIntegers {
+    var index = 0
+    var isSafe = false
+    var workingArray = array
+    
+    while index < array.count {
+        let removedElement = array[index]
+        workingArray.remove(at: index)
+        if checkIfAscendingArrayIsSafe(workingArray) {
+            isSafe = true
+            break
+        } else if checkIfDescendingArrayIsSafe(workingArray) {
+            isSafe = true
+            break
+        }
+        workingArray.insert(removedElement, at: index)
+        index += 1
+    }
+    
+    if isSafe {
+        totalSafeReportsPart2 += 1
+    }
+}
+
+print(totalSafeReportsPart2)
