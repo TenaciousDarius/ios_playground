@@ -50,23 +50,18 @@ print(total)
 
 //MARK: - Part 2
 
-// split array into string before a don't() and everything after one of those
-// split second element into strings separated by do()
-// remove everything from don't() onwards in each of these strings
-// find mul(number, number) and repeat process from part 1
-
 let splitArray = input.components(separatedBy: "do()")
 
 var total2: Int = 0
 
-for element in splitArray {
+for string in splitArray {
     
     var stringToCheck: String = ""
     
-    if let firstIndexOfDont = element.range(of: "don't()")?.lowerBound {
-        stringToCheck = String(element[..<firstIndexOfDont])
+    if let firstIndexOfDont = string.range(of: "don't()")?.lowerBound {
+        stringToCheck = String(string[..<firstIndexOfDont])
     } else {
-        stringToCheck = element
+        stringToCheck = string
     }
     
     let stringTotal = findTotal(pattern: pattern, input: stringToCheck, startIndex: stringToCheck.startIndex, endIndex: stringToCheck.endIndex)
