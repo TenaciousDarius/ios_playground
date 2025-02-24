@@ -55,75 +55,22 @@ print(total)
 // remove everything from don't() onwards in each of these strings
 // find mul(number, number) and repeat process from part 1
 
-//if let indexOfFirstDo = input.range(of: "do()") {
-//    // Make this a var and put outside if let, then start making shorter strings from input and work with these using above logic??
-//    // Would be ideal to make the above logic a function that can have a string passed as an argument, to add to total only if don't() is not at the beginning of the string
-//    let nsRange = NSRange(indexOfFirstDo, in: input)
-//}
+let splitArray = input.components(separatedBy: "do()")
 
-let rangeOfDont = input.range(of: "don't()")
-var index = 0
-//
-if let rangeOfDont = rangeOfDont {
-    index = input.distance(from: input.startIndex, to: rangeOfDont.lowerBound)
-    //    print(index)
+var total2: Int = 0
+
+for element in splitArray {
+    
+    var stringToCheck: String = ""
+    
+    if let firstIndexOfDont = element.range(of: "don't()")?.lowerBound {
+        stringToCheck = String(element[..<firstIndexOfDont])
+    } else {
+        stringToCheck = element
+    }
+    
+    let stringTotal = findTotal(pattern: pattern, input: stringToCheck, startIndex: stringToCheck.startIndex, endIndex: stringToCheck.endIndex)
+    total2 += stringTotal
 }
 
-let firstString = input[
-    input.startIndex..<input.index(input.startIndex, offsetBy: index)]
-//print(firstString)
-
-total = 0
-let totalForFirstString = findTotal(
-    pattern: pattern, input: String(firstString),
-    startIndex: firstString.startIndex, endIndex: firstString.endIndex)
-total += totalForFirstString
-print(total)
-
-var substring: String = String(
-    input[
-        input.index(
-            input.startIndex,
-            offsetBy: input.distance(
-                from: input.startIndex, to: rangeOfDont!.upperBound))...])
-let rangeOfDo = substring.range(of: "do()")
-
-if let rangeOfDo = rangeOfDo {
-    index = substring.distance(
-        from: substring.startIndex, to: rangeOfDo.lowerBound)
-    print(index)
-}
-//print(substring)
-
-//
-
-//print(input[input.index(input.startIndex, offsetBy: 293)...input.index(input.startIndex, offsetBy: 299)])
-
-//let string1Do = input[...input.index(input.startIndex, offsetBy: index + 6)]
-//print(string1Do)
-
-//extension String {
-//    func indicesOf(string: String) -> [Int] {
-//        var indices = [Int]()
-//        var searchStartIndex = self.startIndex
-//
-//        while searchStartIndex < self.endIndex,
-//            let range = self.range(of: string, range: searchStartIndex..<self.endIndex),
-//            !range.isEmpty
-//        {
-//            let index = distance(from: self.startIndex, to: range.lowerBound)
-//            indices.append(index)
-//            searchStartIndex = range.upperBound
-//        }
-//
-//        return indices
-//    }
-//}
-//
-//let doIndices = input.indicesOf(string: "do()")
-//let dontIndices = input.indicesOf(string: "don't()")
-//
-//print(doIndices)
-//print(dontIndices)
-//
-//let arrayOfSubstrings: [String] = []
+print(total2)
